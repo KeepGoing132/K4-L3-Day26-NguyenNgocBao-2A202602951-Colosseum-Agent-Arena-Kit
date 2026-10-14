@@ -1,3 +1,18 @@
+# Bài nộp — Nguyễn Ngọc Bảo · 2A202602951
+
+Bản triển khai gồm bộ xử lý **8 loại câu hỏi**, gateway kiểm soát MCP/A2A,
+guardrail cho đáp án, prosecutor với đủ 17 hook và bộ bài 14 lá.
+
+- Hướng dẫn chạy: [agent/README.md](agent/README.md)
+- Báo cáo kiểm chứng: [eval/VALIDATION.md](eval/VALIDATION.md)
+- Benchmark trên corpus thật: [eval/benchmark-report.json](eval/benchmark-report.json)
+- Bundle chính thức: [submissions/NguyenNgocBao-2A202602951.bundle](submissions/NguyenNgocBao-2A202602951.bundle)
+
+Trên Windows, kiểm tra toàn bộ bằng `./agent/check.ps1` qua Ubuntu WSL.
+Bộ kiểm tra giữ nguyên `kit/`, `bots/` và `fixtures/`.
+
+---
+
 # COLOSSEUM · Đấu Trường Agent
 ### Day 26 · MCP/A2A Infrastructure & Agentic Routing — the competitive lab
 

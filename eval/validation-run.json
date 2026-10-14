@@ -1,0 +1,53 @@
+{
+  "platform": "Ubuntu WSL / native Linux temporary workspace",
+  "python": "3.12.3",
+  "protected_sources_modified": false,
+  "checks": [
+    {
+      "command": [
+        "-m",
+        "kit.gate_no_key"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "-m",
+        "pytest",
+        "tests/",
+        "-q"
+      ],
+      "exit_code": 0,
+      "summary": "4668 passed, 7 skipped in 10.30s"
+    },
+    {
+      "command": [
+        "validate_deck.py",
+        "deck/deck.json",
+        "deck/lineup.json",
+        "--world",
+        "kit/world/df8c55dabb35"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "-m",
+        "eval.prosecute"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "-m",
+        "agent.benchmark",
+        "--bot",
+        "all",
+        "--stress",
+        "--output",
+        "eval/benchmark-report.json"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

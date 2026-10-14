@@ -27,9 +27,10 @@ general natural-language verifier.
 ./.venv/Scripts/python.exe -m pytest tests/test_prosecute.py tests/test_student_solution.py -q
 ```
 
-On the 40 public labelled fixtures: 32 verified, no false, rejected or unproven
-claims, precision 1.000, recall 0.941. The two stale-read fixtures are deliberately
-left unclaimed without independently retrieved freshness metadata. This measures
+On the 40 public labelled fixtures: 34 verified, no false, rejected or unproven
+claims, precision 1.000, recall 1.000. Stale-read also detects answers explicitly selecting one revision as fresher while
+only citing the other revision, after both were returned for the same path. It
+abstains when freshness is unspecified or the answer is internally incoherent. This measures
 public-fixture coverage and does not guarantee tournament performance.
 
 Evidence must name the causal events (`evt:NNNN`) or delivered answer sentences

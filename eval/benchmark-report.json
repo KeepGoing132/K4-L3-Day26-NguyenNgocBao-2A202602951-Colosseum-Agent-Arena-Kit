@@ -1,0 +1,1432 @@
+{
+  "world_id": "df8c55dabb35",
+  "suites": {
+    "you": {
+      "scope": "real MutableStack; local answer validation; not instructor referee",
+      "answered": 10,
+      "abstained": 0,
+      "ask_types": [
+        "citation_for",
+        "contradiction_between",
+        "current_version_of",
+        "define_term",
+        "record_mastery",
+        "source_of",
+        "whatlinkshere",
+        "which_day_covers"
+      ],
+      "credits_left": 58,
+      "rounds": [
+        {
+          "round": 1,
+          "ask": {
+            "type": "which_day_covers",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "course_day",
+              "track",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Khái niệm được đề cập ở ngày 9, track P1.",
+            "course_day": 9,
+            "track": "P1",
+            "anchor": "Frame:e0614beb/w/063",
+            "cited_anchors": [
+              "Frame:e0614beb/w/063"
+            ]
+          },
+          "steps": 4,
+          "calls": 3,
+          "credits_left": 93,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 2,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Metadata và liên kết của tài liệu xác nhận nguồn gốc: Deck:e0614beb/w",
+            "anchor": "Deck:e0614beb/w",
+            "cited_anchors": [
+              "Frame:e0614beb/w/063"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 87,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 3,
+          "ask": {
+            "type": "citation_for",
+            "anchor": "Source:0014ec8ff84d",
+            "require": [
+              "url",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Nguồn trích dẫn: https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "url": "https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "anchor": "Source:0014ec8ff84d",
+            "cited_anchors": [
+              "Source:0014ec8ff84d"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 82,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 4,
+          "ask": {
+            "type": "current_version_of",
+            "path_id": "053195a5",
+            "require": [
+              "fresher",
+              "w_anchor",
+              "c_anchor",
+              "delta"
+            ]
+          },
+          "answer": {
+            "text": "Working và canonical khác nhau; chỉ số drift công khai ghi delta=0.",
+            "fresher": "w",
+            "w_anchor": "Deck:053195a5/w",
+            "c_anchor": "Deck:053195a5/c",
+            "delta": 0,
+            "drifts": true,
+            "index_source": "drift.json (public student snapshot)",
+            "cited_anchors": [
+              "Deck:053195a5/w",
+              "Deck:053195a5/c"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 80,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 5,
+          "ask": {
+            "type": "contradiction_between",
+            "talk": "Talk:a2a-discovery-path",
+            "require": [
+              "a",
+              "b",
+              "talk"
+            ]
+          },
+          "answer": {
+            "text": "Hai nguồn có mâu thuẫn. Đường dẫn Agent Card cho A2A discovery\nCanonical (Claim:a2a-discovery-path/c/001): \\item \\textbf{Agent Card:} JSON tại \\texttt{/.well-known/agent.json} --- announce capabilities, input/output schemas\nWorking (Claim:a2a-discovery-path/w/001): Agent Card tại \\texttt{/.well-known/\\textbf{agent.json}}\n& A2A v0.3 đổi thành \\texttt{/.well-known/\\textbf{agent-card.json}}\nResolution: A2A v0.3 renamed the well-known Agent Card path from /agent.json to /agent-card.json; a client still using the old path gets a silent 404, not an error. Prefer working. Traces to RESEARCH-day26's corrected-claims table, row C4.",
+            "a": "Claim:a2a-discovery-path/c/001",
+            "b": "Claim:a2a-discovery-path/w/001",
+            "talk": "Talk:a2a-discovery-path",
+            "cited_anchors": [
+              "Talk:a2a-discovery-path"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 75,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 6,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 73,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 7,
+          "ask": {
+            "type": "whatlinkshere",
+            "anchor": "Concept:action/w/019",
+            "require": [
+              "anchors"
+            ]
+          },
+          "answer": {
+            "text": "Các trang liên kết tới nguồn: Frame:e0614beb/c/053, Frame:e0614beb/w/063, Glossary:54c8261f/w",
+            "anchors": [
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ],
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 71,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 8,
+          "ask": {
+            "type": "record_mastery",
+            "learner": "Learner:sv-0417",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "receipt_id"
+            ]
+          },
+          "answer": {
+            "text": "Đã ghi tiến độ cho người học được ủy quyền.",
+            "receipt_id": "receipt:5ce51a14f014",
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Learner:sv-0417"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 66,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 9,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 64,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 10,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Metadata và liên kết của tài liệu xác nhận nguồn gốc: Deck:e0614beb/w",
+            "anchor": "Deck:e0614beb/w",
+            "cited_anchors": [
+              "Frame:e0614beb/w/063"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 58,
+          "mutations": [],
+          "exit_status": "answered"
+        }
+      ]
+    },
+    "rookie": {
+      "scope": "real MutableStack; local answer validation; not instructor referee",
+      "answered": 6,
+      "abstained": 4,
+      "ask_types": [
+        "citation_for",
+        "contradiction_between",
+        "current_version_of",
+        "define_term",
+        "record_mastery",
+        "source_of",
+        "whatlinkshere",
+        "which_day_covers"
+      ],
+      "credits_left": 44,
+      "rounds": [
+        {
+          "round": 1,
+          "ask": {
+            "type": "which_day_covers",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "course_day",
+              "track",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 92,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 2,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 87,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 3,
+          "ask": {
+            "type": "citation_for",
+            "anchor": "Source:0014ec8ff84d",
+            "require": [
+              "url",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Nguồn trích dẫn: https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "url": "https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "anchor": "Source:0014ec8ff84d",
+            "cited_anchors": [
+              "Source:0014ec8ff84d"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 79,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 4,
+          "ask": {
+            "type": "current_version_of",
+            "path_id": "053195a5",
+            "require": [
+              "fresher",
+              "w_anchor",
+              "c_anchor",
+              "delta"
+            ]
+          },
+          "answer": {
+            "text": "Working và canonical khác nhau; chỉ số drift công khai ghi delta=0.",
+            "fresher": "w",
+            "w_anchor": "Deck:053195a5/w",
+            "c_anchor": "Deck:053195a5/c",
+            "delta": 0,
+            "drifts": true,
+            "index_source": "drift.json (public student snapshot)",
+            "cited_anchors": [
+              "Deck:053195a5/w",
+              "Deck:053195a5/c"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 73,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 5,
+          "ask": {
+            "type": "contradiction_between",
+            "talk": "Talk:a2a-discovery-path",
+            "require": [
+              "a",
+              "b",
+              "talk"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 68,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 6,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 64,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 7,
+          "ask": {
+            "type": "whatlinkshere",
+            "anchor": "Concept:action/w/019",
+            "require": [
+              "anchors"
+            ]
+          },
+          "answer": {
+            "text": "Các trang liên kết tới nguồn: Frame:e0614beb/c/053, Frame:e0614beb/w/063, Glossary:54c8261f/w",
+            "anchors": [
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ],
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 61,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 8,
+          "ask": {
+            "type": "record_mastery",
+            "learner": "Learner:sv-0417",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "receipt_id"
+            ]
+          },
+          "answer": {
+            "text": "Đã ghi tiến độ cho người học được ủy quyền.",
+            "receipt_id": "receipt:5ce51a14f014",
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Learner:sv-0417"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 53,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 9,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 49,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 10,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 44,
+          "mutations": [],
+          "exit_status": "answered"
+        }
+      ]
+    },
+    "operator": {
+      "scope": "real MutableStack; local answer validation; not instructor referee",
+      "answered": 6,
+      "abstained": 4,
+      "ask_types": [
+        "citation_for",
+        "contradiction_between",
+        "current_version_of",
+        "define_term",
+        "record_mastery",
+        "source_of",
+        "whatlinkshere",
+        "which_day_covers"
+      ],
+      "credits_left": 76,
+      "rounds": [
+        {
+          "round": 1,
+          "ask": {
+            "type": "which_day_covers",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "course_day",
+              "track",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 97,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 2,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 96,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 3,
+          "ask": {
+            "type": "citation_for",
+            "anchor": "Source:0014ec8ff84d",
+            "require": [
+              "url",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Nguồn trích dẫn: https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "url": "https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "anchor": "Source:0014ec8ff84d",
+            "cited_anchors": [
+              "Source:0014ec8ff84d"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 91,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 4,
+          "ask": {
+            "type": "current_version_of",
+            "path_id": "053195a5",
+            "require": [
+              "fresher",
+              "w_anchor",
+              "c_anchor",
+              "delta"
+            ]
+          },
+          "answer": {
+            "text": "Working và canonical khác nhau; chỉ số drift công khai ghi delta=0.",
+            "fresher": "w",
+            "w_anchor": "Deck:053195a5/w",
+            "c_anchor": "Deck:053195a5/c",
+            "delta": 0,
+            "drifts": true,
+            "index_source": "drift.json (public student snapshot)",
+            "cited_anchors": [
+              "Deck:053195a5/w",
+              "Deck:053195a5/c"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 89,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 5,
+          "ask": {
+            "type": "contradiction_between",
+            "talk": "Talk:a2a-discovery-path",
+            "require": [
+              "a",
+              "b",
+              "talk"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 88,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 6,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 86,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 7,
+          "ask": {
+            "type": "whatlinkshere",
+            "anchor": "Concept:action/w/019",
+            "require": [
+              "anchors"
+            ]
+          },
+          "answer": {
+            "text": "Các trang liên kết tới nguồn: Frame:e0614beb/c/053, Frame:e0614beb/w/063, Glossary:54c8261f/w",
+            "anchors": [
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ],
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 84,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 8,
+          "ask": {
+            "type": "record_mastery",
+            "learner": "Learner:sv-0417",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "receipt_id"
+            ]
+          },
+          "answer": {
+            "text": "Đã ghi tiến độ cho người học được ủy quyền.",
+            "receipt_id": "receipt:5ce51a14f014",
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Learner:sv-0417"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 79,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 9,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 77,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 10,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 76,
+          "mutations": [],
+          "exit_status": "answered"
+        }
+      ]
+    },
+    "adversary": {
+      "scope": "real MutableStack; local answer validation; not instructor referee",
+      "answered": 5,
+      "abstained": 5,
+      "ask_types": [
+        "citation_for",
+        "contradiction_between",
+        "current_version_of",
+        "define_term",
+        "record_mastery",
+        "source_of",
+        "whatlinkshere",
+        "which_day_covers"
+      ],
+      "credits_left": 80,
+      "rounds": [
+        {
+          "round": 1,
+          "ask": {
+            "type": "which_day_covers",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "course_day",
+              "track",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 97,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 2,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 96,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 3,
+          "ask": {
+            "type": "citation_for",
+            "anchor": "Source:0014ec8ff84d",
+            "require": [
+              "url",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Nguồn trích dẫn: https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "url": "https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+            "anchor": "Source:0014ec8ff84d",
+            "cited_anchors": [
+              "Source:0014ec8ff84d"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 91,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 4,
+          "ask": {
+            "type": "current_version_of",
+            "path_id": "053195a5",
+            "require": [
+              "fresher",
+              "w_anchor",
+              "c_anchor",
+              "delta"
+            ]
+          },
+          "answer": {
+            "text": "Working và canonical khác nhau; chỉ số drift công khai ghi delta=0.",
+            "fresher": "w",
+            "w_anchor": "Deck:053195a5/w",
+            "c_anchor": "Deck:053195a5/c",
+            "delta": 0,
+            "drifts": true,
+            "index_source": "drift.json (public student snapshot)",
+            "cited_anchors": [
+              "Deck:053195a5/w",
+              "Deck:053195a5/c"
+            ]
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 89,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 5,
+          "ask": {
+            "type": "contradiction_between",
+            "talk": "Talk:a2a-discovery-path",
+            "require": [
+              "a",
+              "b",
+              "talk"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 88,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 6,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 86,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 7,
+          "ask": {
+            "type": "whatlinkshere",
+            "anchor": "Concept:action/w/019",
+            "require": [
+              "anchors"
+            ]
+          },
+          "answer": {
+            "text": "Các trang liên kết tới nguồn: Frame:e0614beb/c/053, Frame:e0614beb/w/063, Glossary:54c8261f/w",
+            "anchors": [
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ],
+            "cited_anchors": [
+              "Concept:action/w/019",
+              "Frame:e0614beb/c/053",
+              "Frame:e0614beb/w/063",
+              "Glossary:54c8261f/w"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 84,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 8,
+          "ask": {
+            "type": "record_mastery",
+            "learner": "Learner:sv-0417",
+            "concept": "Concept:action/w/019",
+            "require": [
+              "receipt_id"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: target is not owned by the learner in act",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 3,
+          "calls": 2,
+          "credits_left": 83,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 9,
+          "ask": {
+            "type": "define_term",
+            "term": "mcp registry",
+            "require": [
+              "definition",
+              "sense",
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "definition": "the official discovery index (`server.json`, reverse-DNS namespaces). Solves discovery, not trust — it is metadata, not hosting, and typosquatted server names remain possible.",
+            "sense": "mcp-registry",
+            "anchor": "Concept:mcp-registry/w/125",
+            "cited_anchors": [
+              "Concept:mcp-registry/w/125"
+            ]
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 81,
+          "mutations": [],
+          "exit_status": "answered"
+        },
+        {
+          "round": 10,
+          "ask": {
+            "type": "source_of",
+            "anchor": "Frame:e0614beb/w/063",
+            "require": [
+              "anchor"
+            ]
+          },
+          "answer": {
+            "text": "Chưa đủ căn cứ đã xác minh: args.limit must be a positive int",
+            "cited_anchors": [],
+            "abstained": true
+          },
+          "steps": 2,
+          "calls": 1,
+          "credits_left": 80,
+          "mutations": [],
+          "exit_status": "answered"
+        }
+      ]
+    }
+  },
+  "attack_probes": [
+    {
+      "id": "atk_01",
+      "class": "shadow",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "conflict",
+        "reason": "result anchor differs from requested anchor"
+      },
+      "credits_left": 94
+    },
+    {
+      "id": "atk_02",
+      "class": "replica_flip",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "conflict",
+        "reason": "result replica differs from anchor revision"
+      },
+      "credits_left": 93
+    },
+    {
+      "id": "atk_03",
+      "class": "drift",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "conflict",
+        "reason": "result anchor differs from requested anchor"
+      },
+      "credits_left": 94
+    },
+    {
+      "id": "atk_04",
+      "class": "poisoned_result",
+      "mutation_applied": true,
+      "observed_ok": true,
+      "requires_corroboration": false,
+      "filtered_rows": 1,
+      "error": null,
+      "credits_left": 96
+    },
+    {
+      "id": "atk_05",
+      "class": "schema_bomb",
+      "mutation_applied": true,
+      "observed_ok": true,
+      "requires_corroboration": false,
+      "filtered_rows": 40,
+      "error": null,
+      "credits_left": 58
+    },
+    {
+      "id": "atk_06",
+      "class": "header_spoof",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "precondition_missing"
+      },
+      "credits_left": 93
+    },
+    {
+      "id": "atk_07",
+      "class": "identity",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "unavailable",
+        "reason": "no safe source rows"
+      },
+      "credits_left": 92
+    },
+    {
+      "id": "atk_08",
+      "class": "forged_card",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "unavailable",
+        "reason": "no safe source rows"
+      },
+      "credits_left": 95
+    },
+    {
+      "id": "atk_09",
+      "class": "faithless_peer",
+      "mutation_applied": true,
+      "observed_ok": true,
+      "requires_corroboration": true,
+      "filtered_rows": 0,
+      "error": null,
+      "credits_left": 93
+    },
+    {
+      "id": "atk_10",
+      "class": "identity",
+      "mutation_applied": true,
+      "observed_ok": false,
+      "requires_corroboration": false,
+      "filtered_rows": 0,
+      "error": {
+        "code": "unavailable",
+        "reason": "no safe source rows"
+      },
+      "credits_left": 95
+    }
+  ],
+  "stress_suite": {
+    "scope": "real MutableStack; local answer validation; not instructor referee",
+    "answered": 4,
+    "abstained": 6,
+    "ask_types": [
+      "citation_for",
+      "contradiction_between",
+      "current_version_of",
+      "define_term",
+      "record_mastery",
+      "source_of",
+      "whatlinkshere",
+      "which_day_covers"
+    ],
+    "credits_left": 54,
+    "rounds": [
+      {
+        "round": 1,
+        "ask": {
+          "type": "which_day_covers",
+          "concept": "Concept:action/w/019",
+          "require": [
+            "course_day",
+            "track",
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: không còn lượt gọi để hoàn tất bằng chứng.",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 4,
+        "calls": 3,
+        "credits_left": 95,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 2,
+        "ask": {
+          "type": "source_of",
+          "anchor": "Frame:e0614beb/w/063",
+          "require": [
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: call exceeds remaining credits or round allowance",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 4,
+        "calls": 3,
+        "credits_left": 89,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 3,
+        "ask": {
+          "type": "citation_for",
+          "anchor": "Source:0014ec8ff84d",
+          "require": [
+            "url",
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Nguồn trích dẫn: https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+          "url": "https://dextralabs.com/blog/production-rag-in-2025-evaluation-cicd-observability/",
+          "anchor": "Source:0014ec8ff84d",
+          "cited_anchors": [
+            "Source:0014ec8ff84d"
+          ]
+        },
+        "steps": 2,
+        "calls": 1,
+        "credits_left": 84,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 4,
+        "ask": {
+          "type": "current_version_of",
+          "path_id": "053195a5",
+          "require": [
+            "fresher",
+            "w_anchor",
+            "c_anchor",
+            "delta"
+          ]
+        },
+        "answer": {
+          "text": "Working và canonical khác nhau; chỉ số drift công khai ghi delta=0.",
+          "fresher": "w",
+          "w_anchor": "Deck:053195a5/w",
+          "c_anchor": "Deck:053195a5/c",
+          "delta": 0,
+          "drifts": true,
+          "index_source": "drift.json (public student snapshot)",
+          "cited_anchors": [
+            "Deck:053195a5/w",
+            "Deck:053195a5/c"
+          ]
+        },
+        "steps": 3,
+        "calls": 2,
+        "credits_left": 82,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 5,
+        "ask": {
+          "type": "contradiction_between",
+          "talk": "Talk:a2a-discovery-path",
+          "require": [
+            "a",
+            "b",
+            "talk"
+          ]
+        },
+        "answer": {
+          "text": "Hai nguồn có mâu thuẫn. Đường dẫn Agent Card cho A2A discovery\nCanonical (Claim:a2a-discovery-path/c/001): \\item \\textbf{Agent Card:} JSON tại \\texttt{/.well-known/agent.json} --- announce capabilities, input/output schemas\nWorking (Claim:a2a-discovery-path/w/001): Agent Card tại \\texttt{/.well-known/\\textbf{agent.json}}\n& A2A v0.3 đổi thành \\texttt{/.well-known/\\textbf{agent-card.json}}\nResolution: A2A v0.3 renamed the well-known Agent Card path from /agent.json to /agent-card.json; a client still using the old path gets a silent 404, not an error. Prefer working. Traces to RESEARCH-day26's corrected-claims table, row C4.",
+          "a": "Claim:a2a-discovery-path/c/001",
+          "b": "Claim:a2a-discovery-path/w/001",
+          "talk": "Talk:a2a-discovery-path",
+          "cited_anchors": [
+            "Talk:a2a-discovery-path"
+          ]
+        },
+        "steps": 4,
+        "calls": 3,
+        "credits_left": 73,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 6,
+        "ask": {
+          "type": "define_term",
+          "term": "mcp registry",
+          "require": [
+            "definition",
+            "sense",
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: tool không trả về dữ liệu an toàn.",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 3,
+        "calls": 2,
+        "credits_left": 69,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 7,
+        "ask": {
+          "type": "whatlinkshere",
+          "anchor": "Concept:action/w/019",
+          "require": [
+            "anchors"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: danh sách liên kết chưa đầy đủ.",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 2,
+        "calls": 1,
+        "credits_left": 67,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 8,
+        "ask": {
+          "type": "record_mastery",
+          "learner": "Learner:sv-0417",
+          "concept": "Concept:action/w/019",
+          "require": [
+            "receipt_id"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: tool không trả về dữ liệu an toàn.",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 3,
+        "calls": 2,
+        "credits_left": 62,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 9,
+        "ask": {
+          "type": "define_term",
+          "term": "mcp registry",
+          "require": [
+            "definition",
+            "sense",
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Chưa đủ căn cứ đã xác minh: thuật ngữ có nhiều nghĩa hoặc định nghĩa chưa được xác minh.",
+          "cited_anchors": [],
+          "abstained": true
+        },
+        "steps": 2,
+        "calls": 1,
+        "credits_left": 60,
+        "mutations": [],
+        "exit_status": "answered"
+      },
+      {
+        "round": 10,
+        "ask": {
+          "type": "source_of",
+          "anchor": "Frame:e0614beb/w/063",
+          "require": [
+            "anchor"
+          ]
+        },
+        "answer": {
+          "text": "Metadata và liên kết của tài liệu xác nhận nguồn gốc: Deck:e0614beb/w",
+          "anchor": "Deck:e0614beb/w",
+          "cited_anchors": [
+            "Frame:e0614beb/w/063"
+          ]
+        },
+        "steps": 3,
+        "calls": 2,
+        "credits_left": 54,
+        "mutations": [],
+        "exit_status": "answered"
+      }
+    ]
+  }
+}

@@ -130,7 +130,21 @@ def detect(cls, trace, answer, card, groups):
                     stale = [a for a in cited if a.startswith(f"Frame:{path}/") and f"/{fresh}/" not in a]
                     if stale:
                         return hit([event, ans_event], f"Cited stale replica despite retrieved freshness metadata: {stale!r}.")
-        return []  # Anchor counts alone do not prove which replica is fresher.
+        # Also detect inconsistency with the answer's own explicit freshness
+        # selection when the same result supplied both revisions. Counts alone
+        # never establish freshness; incoherent prose is not a reliable signal.
+        fresh = ans.get("fresher")
+        if fresh in ("w", "c") and not is_abstention(ans) and not detect("incoherent", trace, ans, card, groups):
+            for event in relevant:
+                available = returned(event)
+                for anchor in sorted(cited):
+                    parsed = parse_revision(anchor)
+                    if not parsed or parsed[1] == fresh: continue
+                    paired = [a for a in available if (other := parse_revision(a))
+                              and other[0] == parsed[0] and other[1] == fresh]
+                    if paired and not any(a in cited for a in paired):
+                        return hit([event, ans_event], f"Answer selects replica {fresh} as fresher but only cites the other revision for the same path, despite both being returned.")
+        return []
     if cls == "privacy_leak":
         for event in results:
             for row in payload(event).get("rows") or []:
@@ -209,3 +223,10 @@ def detect(cls, trace, answer, card, groups):
             return hit([ans_event], "Source question received an answer without the requested anchor or any citation.")
         return []
     return []
+
+
+def parse_revision(anchor):
+    parts = anchor.split("/")
+    if anchor.startswith(("Frame:", "Deck:", "Section:")) and len(parts) > 1 and parts[1] in ("w", "c"):
+        return parts[0].split(":", 1)[1], parts[1]
+    return None

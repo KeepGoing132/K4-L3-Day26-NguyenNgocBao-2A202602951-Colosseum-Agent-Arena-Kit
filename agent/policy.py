@@ -35,6 +35,32 @@ class GatewayPolicy:
         self.lease_rounds = {}
         self.round = None
         self.spent = 0
+        self.round_budget = 0
+        self.history_cursor = 0
+
+    def _read_history(self):
+        """Consume only arena-provided outcomes, without executing or reading files."""
+        history = self.ctx.history
+        for record in history[self.history_cursor:]:
+            if isinstance(record, (tuple, list)) and len(record) == 3:
+                command, decision, result = record
+            elif isinstance(record, Mapping):
+                command, decision = record.get("command"), record.get("decision")
+                result = record.get("outcome") or record.get("result")
+            else:
+                continue
+            if not isinstance(result, Mapping) or not result.get("ok"):
+                continue
+            def value(obj, key):
+                return obj.get(key) if isinstance(obj, Mapping) else getattr(obj, key, None)
+            if value(decision, "verdict") == "deny": continue
+            if (value(command, "server"), value(command, "tool")) == ("registry", "provenance"):
+                anchor = (value(command, "args") or {}).get("anchor")
+                if anchor in (result.get("anchors") or []):
+                    etag = result.get("etag") or next((r.get("etag") for r in result.get("rows", [])
+                                                     if isinstance(r, Mapping) and r.get("etag")), None)
+                    self.note_provenance(anchor, etag, call_index=value(command, "call_index"))
+        self.history_cursor = len(history)
 
     def note_card(self, server, card):
         """Never trust a caller-supplied 'verified' boolean as a signature."""
@@ -53,7 +79,11 @@ class GatewayPolicy:
         from agent.gateway import Decision
 
         if self.round != self.ctx.round:
+            if self.round is not None:
+                self.history_cursor = len(self.ctx.history)
             self.round, self.spent = self.ctx.round, 0
+            self.round_budget = round_allowance(int(self.ctx.credits), self.ctx.round)
+        self._read_history()
         headers = {str(k).lower(): v for k, v in cmd.headers.items()}
         args = dict(cmd.args)
         server, tool = successor_of(cmd.server, cmd.tool) or (cmd.server, cmd.tool)
@@ -189,9 +219,10 @@ class GatewayPolicy:
             rows = 1
         call = ToolCall(server=server, tool=tool, args=args, fields=tuple(sorted(set(fields))),
                         headers=headers, lease_id=cmd.lease_id, call_index=cmd.call_index)
-        price = cost_of(call, n_rows=rows)
+        # Some compatible local tools have specs in servers.py only.
+        price = spec.base + sum(spec.field_weight[f] for f in call.fields) + rows * spec.row_weight
         # Reserve sustainable credits for the remaining rounds; actual credits win.
-        allowance = round_allowance(int(self.ctx.credits), self.ctx.round)
+        allowance = self.round_budget
         if price > self.ctx.credits or self.spent + price > allowance:
             return deny(cmd, "call exceeds remaining credits or round allowance")
         self.spent += price

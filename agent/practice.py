@@ -44,13 +44,28 @@ class DefinitionModel:
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--world", default="kit/world/df8c55dabb35")
-    parser.add_argument("--term", help="Use the same term in each round")
+    parser.add_argument("--term", help="Use the same term in each glossary round")
+    parser.add_argument("--suite", action="store_true", help="Run all eight ask types with real tools")
+    parser.add_argument("--ask-file", help="Read one ask JSON object from a UTF-8 file")
+    parser.add_argument("--allow-writes", action="store_true", help="Grant wiki.write:progress for explicit mastery requests")
     parser.add_argument("--rounds", type=int, choices=range(1, 11), default=10)
     args = parser.parse_args(argv)
     world = World.load(args.world)
     if world.has_truth:
         parser.error("Practice requires a student world without truth.json")
-    session = DefenderSession(world)
+    scopes = ("wiki.read", "wiki.write:progress") if args.allow_writes else ("wiki.read",)
+    if args.suite:
+        from agent.benchmark import run_suite
+        print(json.dumps(run_suite(world), ensure_ascii=True, indent=2))
+        return 0
+    session = DefenderSession(world, scopes=scopes)
+    if args.ask_file:
+        from agent.solver import CourseModel
+        ask = json.loads(Path(args.ask_file).read_text(encoding="utf8"))
+        model = CourseModel(ask, drift_record=world.drift_info(ask.get("path_id", "")))
+        result = session.run_exchange(model, ask, round_no=1)
+        print(json.dumps(result.answer, ensure_ascii=True, indent=2))
+        return 0
     prompt = Path(__file__).with_name("prompt.md").read_text(encoding="utf8")
     outcomes = []
     for index in range(args.rounds):

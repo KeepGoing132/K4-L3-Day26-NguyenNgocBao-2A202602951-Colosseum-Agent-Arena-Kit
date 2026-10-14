@@ -12,26 +12,53 @@ from agent.gateway import Command, Gateway
 from agent.guardrails import scan_for_injected_instructions, validate_answer
 from agent.safety import anchor_base
 from agent.telemetry import RecordingGatewayContext
-from kit.loop.agent import Agent
+from kit.loop.agent import Agent, RunResult
+from kit.loop.limits import LoopTerminated
 from kit.loop.prompt import render_system_prompt
-from kit.mcp.a2a import mint_delegation, verify_card, verify_delegation
+from kit.mcp.a2a import AGENT_CARDS, execute as execute_a2a, mint_delegation, verify_card, verify_delegation
 from kit.mcp.hardmode import HardMode
 from kit.mcp.mutations import MutableStack
+from kit.mcp.specs import MCP_SERVERS, A2A_PEERS
+
+
+class PublicToolStack(MutableStack):
+    """Use public A2A executors when the student world intentionally has no truth.
+
+    The kit's mutation stack uses oracle-backed A2A helpers. The public executors
+    resolve course links instead. Mutation application remains the original kit code.
+    """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._native_tokens = set()
+
+    def _execute_a2a(self, call):
+        token = call.headers.get("delegation") or {}
+        result = execute_a2a(self.world, call, expected_act=self.act, delegation=token,
+                             seen_token_ids=self._native_tokens, hardmode=self.hardmode)
+        if result.get("ok") and isinstance(token, Mapping) and token.get("token_id"):
+            self._native_tokens.add(token["token_id"])
+        return result
 
 
 class DefenderSession:
     def __init__(self, world, *, act="learner:sv-0417", scopes=("wiki.read",),
-                 credits=100, duel_id="local-practice", hardmode=True):
+                 credits=100, duel_id="local-practice", hardmode=True, gateway_cls=Gateway,
+                 opaque=False, degraded=False):
         self.ctx = RecordingGatewayContext(act, "agent:vlearn-tutor", frozenset(scopes), credits, 0, 0)
-        self.gateway = Gateway(self.ctx)
-        mode = HardMode(world=world, opaque_enabled=False, degraded_replica_enabled=False) if hardmode else None
+        self.gateway = gateway_cls(self.ctx)
+        if hasattr(self.gateway, "note_card"):
+            for peer, card in AGENT_CARDS.items():
+                verified = dict(card.to_dict(), verified=verify_card(card).admitted)
+                self.gateway.note_card(peer, verified)
+        mode = HardMode(world=world, opaque_enabled=opaque, degraded_replica_enabled=degraded) if hardmode else None
         if mode:
             mode.reset(duel_id, world_id=world.manifest.get("world_id", ""))
-        self.stack = MutableStack(world=world, act=act, sub=self.ctx.sub, hardmode=mode)
+        self.stack = PublicToolStack(world=world, act=act, sub=self.ctx.sub, hardmode=mode)
         self.trace = []
         self._seq = 0
         self._leases = {}
         self._result_tokens = set()
+        self._seen_cards = {}
         self.retrieved = set()
         self.private_snippets = []
         self.ask = {}
@@ -45,6 +72,7 @@ class DefenderSession:
 
     def begin_exchange(self, ask, *, round_no, card=None):
         self.ctx.round = round_no
+        self.ctx.call_index = 0
         self.ctx.leases = ()
         self._leases.clear()
         self.retrieved.clear()
@@ -73,7 +101,7 @@ class DefenderSession:
         if action.get("kind") == "a2a" and "delegation" not in outgoing["headers"]:
             outgoing["headers"]["delegation"] = mint_delegation(
                 act=self.ctx.act, sub=self.ctx.sub, aud=f"a2a:{action['server']}",
-                ttl=3, call_index=self.ctx.call_index).to_dict()
+                ttl=3, call_index=self.ctx.call_index, nonce=self.ctx.round).to_dict()
         outgoing["call_index"] = self.ctx.call_index
         self.ctx.leases = tuple(key for key, index in self._leases.items()
                                 if self.ctx.call_index - index <= 3)
@@ -94,16 +122,18 @@ class DefenderSession:
             self._emit("enforced", verdict_applied=decision.verdict, charged=result.get("cost", 0))
             self._emit("tool_call", **call.to_dict(), mask=list(call.fields), cost=result.get("cost", 0),
                        credits_left=self.ctx.credits, lease_used=call.lease_id)
-            self._emit("tool_result", **result)
+            recorded = dict(result)
+            recorded["error_code"] = (result.get("error") or {}).get("code")
+            self._emit("tool_result", **recorded)
             if result.get("ok"):
                 lease = result.get("lease_id")
                 if lease:
                     self._leases[lease] = cmd.call_index
-                if (call.server, call.tool) == ("registry", "provenance"):
-                    etag = result.get("etag")
-                    if etag:
-                        self.gateway.note_provenance(call.args.get("anchor"), etag, call_index=cmd.call_index)
                 result = self._filter_result(call, result)
+                if result.get("ok") and (call.server, call.tool) == ("registry", "provenance"):
+                    etag = result.get("etag")
+                    if etag and hasattr(self.gateway, "note_provenance"):
+                        self.gateway.note_provenance(call.args.get("anchor"), etag)
         self.ctx.history += ((cmd, decision, dict(result)),)
         result = dict(result)
         result["credits_left"] = self.ctx.credits
@@ -122,6 +152,10 @@ class DefenderSession:
         safe_rows = []
         for row in result.get("rows") or []:
             if not isinstance(row, Mapping): continue
+            if (call.server, call.tool) == ("registry", "list_servers") and row.get("name") not in MCP_SERVERS | A2A_PEERS:
+                continue
+            if call.server == "research" and isinstance(row.get("anchor"), str) and not row["anchor"].startswith("Source:"):
+                continue
             token = row.get("delegation_token")
             if token is not None:
                 admission = verify_delegation(token, aud=f"a2a:{call.server}",
@@ -146,18 +180,34 @@ class DefenderSession:
             return {"ok": False, "error": {"code": "unavailable", "reason": "no safe source rows"}, "cost": result.get("cost", 0)}
         filtered = dict(result)
         filtered["rows"] = safe_rows
+        filtered["filtered_rows"] = len(result.get("rows") or []) - len(safe_rows)
         # Filtering any row makes the envelope's anchor-to-row mapping ambiguous.
         if len(safe_rows) != len(result.get("rows") or []):
             filtered["anchors"] = [r["anchor"] for r in safe_rows if isinstance(r.get("anchor"), str)]
-        self.retrieved.update(filtered.get("anchors") or [])
-        self.retrieved.update(r["anchor"] for r in safe_rows if isinstance(r.get("anchor"), str))
+        if call.server in ("curriculum-analyst", "citation-checker", "roster"):
+            filtered["requires_corroboration"] = True
+        else:
+            self.retrieved.update(filtered.get("anchors") or [])
+            self.retrieved.update(r["anchor"] for r in safe_rows if isinstance(r.get("anchor"), str))
         return filtered
 
     def run_exchange(self, model, ask, *, round_no, card=None, strategy_prompt=""):
+        from agent.solver import normalize_ask
+        ask = normalize_ask(ask)
         self.begin_exchange(ask, round_no=round_no, card=card)
         loop = Agent(model, self, system_prompt=render_system_prompt() + "\n" + strategy_prompt,
                      task=json.dumps(ask, ensure_ascii=False))
-        result = loop.run()
+        try:
+            result = loop.run()
+        except LoopTerminated as exc:
+            # Preserve the actual termination status and a safe final record.
+            # This is not reported as a normally answered exchange.
+            self.delivered_answer = {"text": "Chưa đủ căn cứ đã xác minh; đã hết giới hạn của lượt đấu.",
+                                     "cited_anchors": [], "abstained": True}
+            self._emit("answer", **self.delivered_answer)
+            self._emit("exchange_end", reason=exc.exit_status)
+            result = RunResult(exc.exit_status, loop._steps, loop._calls, loop.elapsed(),
+                               self.delivered_answer, tuple(loop.messages), loop.observations)
         # kit.loop returns the original action; return the checked, delivered answer.
         messages = [dict(message) for message in result.messages]
         for message in reversed(messages):
