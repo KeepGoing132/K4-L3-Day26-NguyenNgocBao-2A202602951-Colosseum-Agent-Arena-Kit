@@ -142,19 +142,18 @@ returns `true`); `atk_03`'s `drift`-class card is held to the identical mechanic
 even though it is not literally named `replica_flip` (`validate_deck.py`'s `R5b` rule) — its
 `path_id` (`053195a5`) is also a real drift-set member.
 
-**`deck/lineup.json`** plays all 10 attacks, none of the 4 blanks, in this order:
+**Current `deck/lineup.json`** uses 8 attacks and 2 clean blanks:
 
 ```
-atk_05 (schema_bomb, cheap opener) → atk_01 (shadow) → atk_04 (poisoned_result) →
-atk_08 (forged_card) → atk_03 (drift) → atk_09 (faithless_peer) → atk_06 (header_spoof) →
-atk_02 (replica_flip) → atk_10 (identity/aud) → atk_07 (identity/act, CONTRACTS' own worked case, saved for last)
+atk_05 -> atk_01 -> blk_01 -> atk_08 -> atk_03 -> atk_04 ->
+atk_06 -> atk_02 -> blk_02 -> atk_07
 ```
 
-Layers alternate deliberately (MCP, MCP, MCP, A2A, MCP, A2A, gateway, gateway, A2A, A2A) so a
-defender who hardens against whatever landed last round is still exposed the next. **Benching
-all 4 blanks is this starter's own aggressive choice, not a rule** — trading an attack for a
-blank, and where in the order to place it, is exactly the strategic lever RULES.md's blank
-mechanic creates. Pull it if your own deck wants to bait a false positive instead.
+Blanks at rounds 3 and 9 test whether the opponent keeps refusing legitimate
+questions after attack rounds. The final act-identity attack remains late in the
+match. All 14 cards remain available; every attack declares
+`defense_event: "gateway.denied"` as required by the authoring contract.
+This lineup is a starting strategy, not a measured tournament optimum.
 
 ---
 
